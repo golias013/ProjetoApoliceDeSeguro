@@ -4,6 +4,7 @@ import Pages.EnvioDeCotacaoPage;
 import automovelSeguro.BaseTest;
 import automovelSeguro.Utils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class EnviarCotacaoFunction extends BaseTest {
@@ -69,7 +70,7 @@ public class EnviarCotacaoFunction extends BaseTest {
         }
     }
     public String validarEmailEnviado(){
-        wait.toString().contains("Sending e-mail success");
+        wait.until(ExpectedConditions.textToBePresentInElement(this.envioDeCotacaoPage.getConfirmMessage(), "Sending e-mail success!"));
         return driver.findElement(By.xpath("//div[@class=\"sweet-alert showSweetAlert visible\"]/child::h2[contains(text(), 'Sending e-mail success!')]")).getText();
     }
 }

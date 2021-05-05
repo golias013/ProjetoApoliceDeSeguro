@@ -3,6 +3,7 @@ package Steps;
 import Function.*;
 import automovelSeguro.BaseTest;
 import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -14,15 +15,16 @@ public class AutomobileInsuranceStep extends BaseTest {
     private SelecionarPlanoDeSeguroFunction planoDeSeguroFunction;
     private EnviarCotacaoFunction enviarCotacaoFunction;
 
-    public AutomobileInsuranceStep(){
+    public AutomobileInsuranceStep() {
         this.dadosDoVeiculoFunction = new DadosDoVeiculoFunction();
         this.dadosDoSeguradoFunction = new DadosDoSeguradoFunction();
         this.dadosDoProdutoFunction = new DadosDoProdutoFunction();
         this.planoDeSeguroFunction = new SelecionarPlanoDeSeguroFunction();
         this.enviarCotacaoFunction = new EnviarCotacaoFunction();
     }
+
     @Before
-    public void abrirNavegador(){
+    public void abrirNavegador() {
         driver.get(url);
     }
 
@@ -31,7 +33,7 @@ public class AutomobileInsuranceStep extends BaseTest {
 
     @Given("Preencha o formulario de dados do veiculo")
     public void preencha_o_formulario_de_dados_do_veiculo() {
-       this.dadosDoVeiculoFunction.preencherDadosDoVeiculo();
+        this.dadosDoVeiculoFunction.preencherDadosDoVeiculo();
     }
 
     @When("Clico no botao next")
@@ -41,7 +43,7 @@ public class AutomobileInsuranceStep extends BaseTest {
 
     @Then("Valido formulario de dados do segurado")
     public void valido_formulario_de_dados_do_segurado() {
-      this.dadosDoVeiculoFunction.validarTituloDadosSegurado();
+        this.dadosDoVeiculoFunction.validarTituloDadosSegurado();
     }
 
     //CT02- Cadastro de dados do Veiculo
@@ -57,12 +59,12 @@ public class AutomobileInsuranceStep extends BaseTest {
 
     @When("Clico no botao next da tela dados do segurado")
     public void clico_no_botao_next_da_tela_dados_do_segurado() {
-       this.dadosDoSeguradoFunction.clicarBotaoNextDaTelaDadosDoSegurado();
+        this.dadosDoSeguradoFunction.clicarBotaoNextDaTelaDadosDoSegurado();
     }
 
     @Then("Valido formulario de dados do produto")
     public void valido_formulario_de_dados_do_produto() {
-       this.dadosDoSeguradoFunction.validarTituloDadosProduto();
+        this.dadosDoSeguradoFunction.validarTituloDadosProduto();
     }
 
     //CT03 - Cadastro de dados do produto
@@ -107,12 +109,12 @@ public class AutomobileInsuranceStep extends BaseTest {
 
     @When("Clico no botao next na tela de plano do seguro")
     public void clico_no_botao_next_na_tela_de_plano_do_seguro() {
-     this.planoDeSeguroFunction.clicarBotaoNextDaTelaPlanoDeSeguro();
+        this.planoDeSeguroFunction.clicarBotaoNextDaTelaPlanoDeSeguro();
     }
 
     @Then("Valido formulario de cotacao")
     public void valido_formulario_de_cotacao() {
-      this.planoDeSeguroFunction.validarTituloCotacao();
+        this.planoDeSeguroFunction.validarTituloCotacao();
     }
 
     //CT05 - Preencher formulario de cotacao
@@ -133,12 +135,59 @@ public class AutomobileInsuranceStep extends BaseTest {
         this.planoDeSeguroFunction.validarTituloCotacao();
         this.enviarCotacaoFunction.envioDeCotacao();
     }
+
     @When("Clico no botao send na tela de cotacao")
     public void clico_no_botao_send_na_tela_de_cotacao() {
         this.enviarCotacaoFunction.clicarBotaoSendDaTelaEnvioCotacao();
     }
+
     @Then("Valido email enviado com sucesso")
     public void valido_email_enviado_com_sucesso() {
         this.enviarCotacaoFunction.validarEmailEnviado();
+    }
+
+    //CT06 - Solicitar apolice de seguro
+    //-----------------------------------------------------------------------------------
+
+    @Given("Preencher formulario de dados do veiculo")
+    public void preencher_formulario_de_dados_do_veiculo() {
+        this.dadosDoVeiculoFunction.preencherDadosDoVeiculo();
+        this.dadosDoVeiculoFunction.clicarBotaoNextDaTelaDadosDoVeiculo();
+        this.dadosDoVeiculoFunction.validarTituloDadosSegurado();
+    }
+    
+    @And("Preencher formulario de dados do segurado")
+    public void preencher_formulario_de_dados_do_segurado() {
+      this.dadosDoSeguradoFunction.preencherDadosDoSegurado();
+      this.dadosDoSeguradoFunction.clicarBotaoNextDaTelaDadosDoSegurado();
+      this.dadosDoSeguradoFunction.validarTituloDadosProduto();
+    }
+
+    @And("Preencher formulario de dados do produto")
+    public void preencher_formulario_de_dados_do_produto() {
+        this.dadosDoProdutoFunction.preencherDadosDoProduto();
+        this.dadosDoProdutoFunction.clicarBotaoNextDaTelaDadosDoProduto();
+        this.dadosDoProdutoFunction.validarTituloOpcaoDePreco();
+    }
+    @And("Selecionar um plano para o seguro do veiculo")
+    public void selecionar_um_plano_para_o_seguro_do_veiculo() {
+        this.planoDeSeguroFunction.selecionarPlanoDeSeguro();
+        this.planoDeSeguroFunction.clicarBotaoNextDaTelaPlanoDeSeguro();
+        this.planoDeSeguroFunction.validarTituloCotacao();
+    }
+
+    @And("Preencher formulario de envio de cotacao")
+    public void preencher_formulario_de_envio_de_cotacao() {
+        this.enviarCotacaoFunction.envioDeCotacao();
+    }
+
+    @When("Clico no botao enviar cotacao")
+    public void clico_no_botao_enviar_cotacao() {
+       this.enviarCotacaoFunction.clicarBotaoSendDaTelaEnvioCotacao();
+    }
+
+    @Then("Valido a mensagem de email enviado com sucesso")
+    public void valido_a_mensagem_de_email_enviado_com_sucesso() {
+       this.enviarCotacaoFunction.validarEmailEnviado();
     }
 }

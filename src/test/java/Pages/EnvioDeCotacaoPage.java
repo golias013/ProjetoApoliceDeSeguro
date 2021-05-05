@@ -28,6 +28,8 @@ public class EnvioDeCotacaoPage extends BaseTest {
     private WebElement retornarParaSelecaoDePreco;
     @FindBy(xpath = "//button[@id=\"sendemail\"]")
     private WebElement enviarEmail;
+    @FindBy (xpath = "//div[@class=\"sweet-alert showSweetAlert visible\"]/child::h2[contains(text(), \"Sending e-mail success!\")]")
+    private WebElement confirmMessage;
 
     public WebElement getEmail(){return email;}
     public WebElement getTelefone(){return telefone;}
@@ -37,4 +39,5 @@ public class EnvioDeCotacaoPage extends BaseTest {
     public WebElement getComentarios(){return comentarios;}
     public WebElement getRetornarParaSelecaoDePreco(){return retornarParaSelecaoDePreco;}
     public WebElement getEnviarEmail(){return enviarEmail;}
+    public WebElement getConfirmMessage(){return confirmMessage;}
 }
